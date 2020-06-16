@@ -95,23 +95,18 @@ async function init() {
     requestAnimationFrame(() => loop());
   }
 
-  let gyroscope = new Gyroscope({ frequency: 60 });
+  var gyroscope = new Gyroscope({ frequency: 60 });
 
   gyroscope.addEventListener("reading", (e) => {
-    // console.log("Angular velocity along the X-axis " + gyroscope.x);
-    // console.log("Angular velocity along the Y-axis " + gyroscope.y);
-    // console.log("Angular velocity along the Z-axis " + gyroscope.z);
-    var mpos = [
-      -0.5 + gyroscope.x / canvas.width,
-      0.5 - gyroscope.y / canvas.width,
-    ];
-    gl.uniform2fv(gyroscope, new Float32Array(mpos));
+    console.log("Angular velocity along the X-axis " + gyroscope.x);
+    console.log("Angular velocity along the Y-axis " + gyroscope.y);
+    console.log("Angular velocity along the Z-axis " + gyroscope.z);
   });
   gyroscope.start();
 
-  // var mouseLoc = gl.getUniformLocation(program, "mouse");
-  // canvas.onmousemove = function (d) {
-  //   var mpos = [-0.5 + d.layerX / canvas.width, 0.5 - d.layerY / canvas.width];
-  //   gl.uniform2fv(mouseLoc, new Float32Array(mpos));
-  // };
+  var mouseLoc = gl.getUniformLocation(program, "mouse");
+  canvas.onmousemove = function (d) {
+    var mpos = [-0.5 + d.layerX / canvas.width, 0.5 - d.layerY / canvas.width];
+    gl.uniform2fv(mouseLoc, new Float32Array(mpos));
+  };
 }
